@@ -1,0 +1,25 @@
+name: Markdown Linter
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+
+jobs:
+  markdown-linter:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.x
+
+      - name: Install dependencies
+        run: pip install proselint  # or write-good
+
+      - name: Run Markdown Linter
+        run: |
+          find . -name '*.md' -print0 | xargs -0 proselint  # or write-good
+      
